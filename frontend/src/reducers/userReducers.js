@@ -5,7 +5,10 @@ import {
   USER_LOGOUT,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
-  USER_REGISTER_FAILED
+  USER_REGISTER_FAILED,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAILED
 } from "../constants/UserConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -24,13 +27,25 @@ export const userLoginReducer = (state = {}, action) => {
 };
 
 export const userRegisterReducer = (state = {}, action) => {
-  debugger;
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return { loading: true };
     case USER_REGISTER_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return { loading: false, user: action.payload };
     case USER_REGISTER_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userDetailsReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case USER_DETAILS_REQUEST:
+      return { ...state, loading: true };
+    case USER_DETAILS_SUCCESS:
+      return { loading: false, user: action.payload };
+    case USER_DETAILS_FAILED:
       return { loading: false, error: action.payload };
     default:
       return state;
