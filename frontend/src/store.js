@@ -4,15 +4,16 @@ import { createLogger } from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
   productListReducer,
-  productDetailsReducer
+  productDetailsReducer,
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/CartReducers";
 import {
   userLoginReducer,
   userRegisterReducer,
   userDetailsReducer,
-  userUpdateProfileReducer
+  userUpdateProfileReducer,
 } from "./reducers/userReducers";
+import { orderCreateReducer } from "./reducers/orderReducer";
 
 const logger = createLogger();
 
@@ -23,7 +24,8 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
-  userUpdate: userUpdateProfileReducer
+  userUpdate: userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
@@ -42,13 +44,18 @@ const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
   ? JSON.parse(localStorage.getItem("paymentMethod"))
   : {};
 
+// const orderItemsFromStorage = localStorage.getItem("orderItems")
+//   ? JSON.parse(localStorage.getItem("orderItems"))
+//   : {};
+
 const initialState = {
   cart: {
     cartItems: cartItemsFromStorage,
     shippingAddress: shippingAddressFromStorage,
-    paymentMethod: paymentMethodFromStorage
+    paymentMethod: paymentMethodFromStorage,
+    // orderItems: orderItemsFromStorage,
   },
-  userLogin: { userInfo: userInfoFromStorage }
+  userLogin: { userInfo: userInfoFromStorage },
 };
 
 const middleware = [thunk, logger];
