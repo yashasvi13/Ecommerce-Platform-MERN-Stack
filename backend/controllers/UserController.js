@@ -15,7 +15,7 @@ const authUser = AsyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     res.status(401);
@@ -37,7 +37,7 @@ const registerUser = AsyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
-    password
+    password,
   });
 
   if (user) {
@@ -46,7 +46,7 @@ const registerUser = AsyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -66,12 +66,21 @@ const getUserProfile = AsyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin
+      isAdmin: user.isAdmin,
     });
   } else {
     res.status(404);
     throw new Error("User not found");
   }
+});
+
+// @desc     Get all users
+// @route    GET api/users
+// @access   Private/Admin
+
+const getUsers = AsyncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.json(users);
 });
 
 // @desc     Update user profile
@@ -95,7 +104,7 @@ const updateUserProfile = AsyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      token: generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     res.status(404);
@@ -103,4 +112,4 @@ const updateUserProfile = AsyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, registerUser, getUserProfile, updateUserProfile };
+export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers };
