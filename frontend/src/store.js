@@ -14,6 +14,7 @@ import {
   userUpdateProfileReducer,
 } from "./reducers/userReducers";
 import {
+  myOrdersReducers,
   orderCreateReducer,
   orderDetailsReducer,
   orderPayReducer,
@@ -32,6 +33,7 @@ const reducer = combineReducers({
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
+  myOrders: myOrdersReducers,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getUserDetails, userUpdateProfile } from "../actions/UserAction";
+import { getMyOrdersList } from "../actions/OrderActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/UserConstants";
+import { LinkContainer } from "react-router-bootstrap";
+
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,22 +17,26 @@ const ProfileScreen = ({ history }) => {
 
   const dispatch = useDispatch();
 
-  const userDetails = useSelector(state => state.userDetails);
+  const userDetails = useSelector((state) => state.userDetails);
   const { loading, user, error } = userDetails;
 
-  const userLogin = useSelector(state => state.userLogin);
+  const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userUpdate = useSelector(state => state.userUpdate);
+  const userUpdate = useSelector((state) => state.userUpdate);
   const { success } = userUpdate;
+
+  const myOrders = useSelector((state) => state.myOrders);
+  const { loading: loadingOrders, error: errorOrders, orders } = myOrders;
 
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     } else {
       if (!user || !user.name || success) {
-        dispatch({ type: USER_UPDATE_PROFILE_RESET });
+        // dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile"));
+        dispatch(getMyOrdersList());
       } else {
         console.log(user);
         setName(user.name);
@@ -38,7 +45,7 @@ const ProfileScreen = ({ history }) => {
     }
   }, [history, userInfo, dispatch, user, success]);
 
-  const submitHandler = e => {
+  const submitHandler = (e) => {
     e.preventDefault();
     if (confirmPassword !== password) {
       setMessage("Passwords did not match");
@@ -63,7 +70,7 @@ const ProfileScreen = ({ history }) => {
               type="name"
               placeholder="Enter name"
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
           <Form.Group controlId="email">
@@ -72,7 +79,7 @@ const ProfileScreen = ({ history }) => {
               type="email"
               placeholder="Enter email"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
           <Form.Group controlId="password">
@@ -81,7 +88,7 @@ const ProfileScreen = ({ history }) => {
               type="password"
               placeholder="Enter password"
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
           <Form.Group controlId="confirmPassword">
@@ -90,7 +97,7 @@ const ProfileScreen = ({ history }) => {
               type="password"
               placeholder="Confirm password"
               value={confirmPassword}
-              onChange={e => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </Form.Group>
           <Button type="submit" variant="primary">
@@ -98,7 +105,57 @@ const ProfileScreen = ({ history }) => {
           </Button>
         </Form>
       </Col>
-      <Col md={9}>My Orders</Col>
+      <Col md={9}>
+        <h2>My Orders</h2>
+        {loadingOrders ? (
+          <Loader />
+        ) : errorOrders ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          <Table striped bordered hover responsive className="table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>DELIVERED</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td> {order._id}</td>
+                  <td> {order.createdAt.substring(0, 10)}</td>
+                  <td> {order.totalPrice}</td>
+                  <td>
+                    {order.isPaid ? (
+                      order.paidAt.substring(0, 10)
+                    ) : (
+                      <i className="fas fa-times" style={{ color: "red" }}></i>
+                    )}
+                  </td>
+                  <td>
+                    {order.isDelivered ? (
+                      order.paidAt.substring(0, 10)
+                    ) : (
+                      <i className="fas fa-times" style={{ color: "red" }}></i>
+                    )}
+                  </td>
+                  <td>
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <Button className="btn-sm" variant="light">
+                        Details
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
+      </Col>
     </Row>
   );
 };
