@@ -83,6 +83,21 @@ const getUsers = AsyncHandler(async (req, res) => {
   res.json(users);
 });
 
+// @desc     Delete users
+// @route    GET api/users/:id
+// @access   Private/Admin
+
+const deleteUsers = AsyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    await user.remove();
+    res.json({ message: "User removed" });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 // @desc     Update user profile
 // @route    PUT api/users/profile
 // @access   Private
@@ -112,4 +127,11 @@ const updateUserProfile = AsyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers };
+export {
+  authUser,
+  registerUser,
+  getUserProfile,
+  updateUserProfile,
+  getUsers,
+  deleteUsers,
+};
