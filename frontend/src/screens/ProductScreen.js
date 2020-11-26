@@ -8,7 +8,7 @@ import {
   ListGroup,
   Card,
   Button,
-  Form
+  Form,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
 import { listProductDetails } from "../actions/ProductActions";
@@ -19,7 +19,7 @@ const ProductScreen = ({ match, history }) => {
   const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
-  const productDetails = useSelector(state => state.productDetails);
+  const productDetails = useSelector((state) => state.productDetails);
 
   const { loading, error, product } = productDetails;
 
@@ -39,7 +39,7 @@ const ProductScreen = ({ match, history }) => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message>{error}</Message>
       ) : (
         <Row>
           <Col md={6}>
@@ -89,9 +89,9 @@ const ProductScreen = ({ match, history }) => {
                         <Form.Control
                           as="select"
                           value={qty}
-                          onChange={e => setQty(e.target.value)}
+                          onChange={(e) => setQty(e.target.value)}
                         >
-                          {[...Array(product.countInStock).keys()].map(x => (
+                          {[...Array(product.countInStock).keys()].map((x) => (
                             <option key={x + 1} value={x + 1}>
                               {x + 1}
                             </option>

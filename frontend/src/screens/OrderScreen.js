@@ -65,7 +65,7 @@ const OrderScreen = ({ match }) => {
   return loading ? (
     <Loader />
   ) : error ? (
-    <Message variant="danger">{error}</Message>
+    <Message>{error}</Message>
   ) : (
     <>
       <h1>Order {order._id}</h1>
@@ -112,7 +112,7 @@ const OrderScreen = ({ match }) => {
               <h2>Order Items</h2>
 
               {order.orderItems.length === 0 ? (
-                <Message>No order found</Message>
+                <Message variant="info">No order found</Message>
               ) : (
                 <ListGroup>
                   {order.orderItems.map((item, index) => (

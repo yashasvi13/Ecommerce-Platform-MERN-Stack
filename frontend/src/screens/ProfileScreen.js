@@ -59,8 +59,8 @@ const ProfileScreen = ({ history }) => {
     <Row>
       <Col md={3}>
         <h2>User Profile</h2>
-        {error && <Message variant="danger">{error}</Message>}
-        {message && <Message variant="danger">{message}</Message>}
+        {error && <Message>{error}</Message>}
+        {message && <Message>{message}</Message>}
         {success && <Message variant="success">Updated Successfully</Message>}
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
@@ -110,7 +110,7 @@ const ProfileScreen = ({ history }) => {
         {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (
-          <Message variant="danger">{error}</Message>
+          <Message>{error}</Message>
         ) : (
           <Table striped bordered hover responsive className="table-sm">
             <thead>

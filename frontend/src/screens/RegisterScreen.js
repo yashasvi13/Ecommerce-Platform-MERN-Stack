@@ -16,7 +16,7 @@ const RegisterScreen = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
-  const userRegister = useSelector(state => state.userRegister);
+  const userRegister = useSelector((state) => state.userRegister);
   const { loading, userInfo, error } = userRegister;
 
   const redirect = location.search !== "" ? location.search.split("=")[1] : "/";
@@ -27,7 +27,7 @@ const RegisterScreen = ({ location, history }) => {
     }
   }, [history, userInfo, redirect]);
 
-  const submitHandler = e => {
+  const submitHandler = (e) => {
     e.preventDefault();
     if (confirmPassword !== password) {
       setMessage("Passwords did not match");
@@ -40,8 +40,8 @@ const RegisterScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Sign Up</h1>
-      {error && <Message variant="danger">{error}</Message>}
-      {message && <Message variant="danger">{message}</Message>}
+      {error && <Message>{error}</Message>}
+      {message && <Message>{message}</Message>}
 
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
@@ -51,7 +51,7 @@ const RegisterScreen = ({ location, history }) => {
             type="name"
             placeholder="Enter name"
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="email">
@@ -60,7 +60,7 @@ const RegisterScreen = ({ location, history }) => {
             type="email"
             placeholder="Enter email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="password">
@@ -69,7 +69,7 @@ const RegisterScreen = ({ location, history }) => {
             type="password"
             placeholder="Enter password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="confirmPassword">
@@ -78,7 +78,7 @@ const RegisterScreen = ({ location, history }) => {
             type="password"
             placeholder="Confirm password"
             value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Group>
         <Button type="submit" variant="primary">

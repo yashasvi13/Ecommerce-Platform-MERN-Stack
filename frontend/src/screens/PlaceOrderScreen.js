@@ -84,7 +84,7 @@ const PlaceOrderScreen = ({ history }) => {
               <h2>Order Items</h2>
 
               {cart.cartItems.length === 0 ? (
-                <Message>Your cart is empty</Message>
+                <Message variant="info">Your cart is empty</Message>
               ) : (
                 <ListGroup>
                   {cart.cartItems.map((item, index) => (
@@ -146,7 +146,7 @@ const PlaceOrderScreen = ({ history }) => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                {error && <Message variant="danger">{error}</Message>}
+                {error && <Message>{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button

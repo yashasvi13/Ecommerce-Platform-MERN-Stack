@@ -8,7 +8,7 @@ import {
   Image,
   Form,
   Button,
-  Card
+  Card,
 } from "react-bootstrap";
 import Message from "../components/Message";
 
@@ -21,7 +21,7 @@ const CartScreen = ({ match, location, history }) => {
 
   const dispatch = useDispatch();
 
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const CartScreen = ({ match, location, history }) => {
     }
   }, [dispatch, qty, productId]);
 
-  const removeFromCartHandler = id => {
+  const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
     console.log("Remove");
   };
@@ -46,12 +46,12 @@ const CartScreen = ({ match, location, history }) => {
       <Col md={8}>
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
-          <Message>
+          <Message vairant="info">
             Your cart is empty <Link to="/">Go Back</Link>
           </Message>
         ) : (
           <ListGroup variant="flush">
-            {cartItems.map(cartItem => (
+            {cartItems.map((cartItem) => (
               <ListGroup.Item key={cartItem.product}>
                 <Row>
                   <Col md={2}>
@@ -72,13 +72,13 @@ const CartScreen = ({ match, location, history }) => {
                     <Form.Control
                       as="select"
                       value={cartItem.qty}
-                      onChange={e =>
+                      onChange={(e) =>
                         dispatch(
                           addToCart(cartItem.product, Number(e.target.value))
                         )
                       }
                     >
-                      {[...Array(cartItem.countInStock).keys()].map(x => (
+                      {[...Array(cartItem.countInStock).keys()].map((x) => (
                         <option key={x + 1} value={x + 1}>
                           {x + 1}
                         </option>
