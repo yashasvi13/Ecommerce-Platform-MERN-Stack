@@ -7,14 +7,22 @@ import Loader from "../components/Loader";
 import { listUsers } from "../actions/UserAction";
 import { userListReducer } from "../reducers/userReducers";
 
-const UserListScreen = () => {
+const UserListScreen = ({ history }) => {
   const dispatch = useDispatch(userListReducer);
+
   const userList = useSelector((state) => state.userList);
   const { loading, users, error } = userList;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   useEffect(() => {
-    dispatch(listUsers());
-  }, [dispatch]);
+    if (userInfo && !userInfo.isAdmin) {
+      history.push("/login");
+    } else {
+      dispatch(listUsers());
+    }
+  }, [dispatch, history]);
 
   const deleteHandler = () => {
     console.log("delete");

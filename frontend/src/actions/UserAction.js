@@ -17,6 +17,7 @@ import {
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAILED,
+  USER_LIST_RESET,
 } from "../constants/UserConstants";
 import { MY_ORDERS_RESET } from "../constants/OrderConstants";
 // import { CART_CLEAR_ITEMS } from "../constants/CartConstants";
@@ -157,6 +158,7 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("paymentMethod");
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: USER_LIST_RESET });
   dispatch({ type: MY_ORDERS_RESET });
   document.location.href = "/login";
 };
