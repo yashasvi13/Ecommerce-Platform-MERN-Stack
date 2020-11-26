@@ -27,7 +27,6 @@ const OrderScreen = ({ match }) => {
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=INR`;
       script.async = true;
       script.onload = () => {
-        debugger;
         setSdkReady(true);
       };
       document.body.appendChild(script);
@@ -39,7 +38,6 @@ const OrderScreen = ({ match }) => {
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.paypal) {
-        debugger;
         addPayPalScript();
       } else {
         setSdkReady(true);

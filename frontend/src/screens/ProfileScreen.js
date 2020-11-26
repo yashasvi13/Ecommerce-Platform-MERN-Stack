@@ -23,7 +23,7 @@ const ProfileScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userUpdate = useSelector((state) => state.userUpdate);
+  const userUpdate = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdate;
 
   const myOrders = useSelector((state) => state.myOrders);
