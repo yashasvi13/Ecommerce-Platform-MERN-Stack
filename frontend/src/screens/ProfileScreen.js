@@ -5,7 +5,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getUserDetails, userUpdateProfile } from "../actions/UserAction";
 import { getMyOrdersList } from "../actions/OrderActions";
-import { USER_UPDATE_PROFILE_RESET } from "../constants/UserConstants";
+// import { USER_UPDATE_PROFILE_RESET } from "../constants/UserConstants";
 import { LinkContainer } from "react-router-bootstrap";
 
 const ProfileScreen = ({ history }) => {
